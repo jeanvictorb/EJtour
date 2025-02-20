@@ -30,30 +30,46 @@ public class UserService {
     }
 
     public String register(ResgisterRequest request) {
-        Optional<User> existingUser = userRepository.findByEmail(request.getEmail()); // Corrigido nome do método
-        if (existingUser.isPresent()) {
-            throw new RuntimeException("Email já cadastrado!"); // Corrigido RuntimeErrorException para RuntimeException
+        try {
+            Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+            
+            // Verifica se o email já está cadastrado
+            existingUser.orElseThrow(() -> new RuntimeException("Email já cadastrado!"));
+    
+            User user = new User();
+            user.setName(request.getName());
+            user.setEmail(request.getEmail());
+            user.setPassword(passwordEncorder.encode(request.getPassword()));
+    
+            userRepository.save(user);
+            return "Usuário cadastrado com sucesso!";
+            
+        } catch (RuntimeException e) {
+            return "Erro ao registrar usuário: " + e.getMessage();
+        } catch (Exception e) {
+            return "Erro inesperado ao registrar usuário: " + e.getMessage();
         }
-
-        User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncorder.encode(request.getPassword())); // Correção no encoding da senha
-
-        userRepository.save(user);
-        return "Usuário cadastrado com sucesso!";
     }
-
+    
     public String login(AuthRequest request) {
-        User user = userRepository.findByEmail(request.getEmail()) // Corrigido nome do método
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
-
-        if (!passwordEncorder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Senha incorreta!");
+        try {
+            User user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+    
+            // Verifica se a senha está correta
+            if (!passwordEncorder.matches(request.getPassword(), user.getPassword())) {
+                throw new RuntimeException("Senha incorreta!");
+            }
+    
+            return jwtUtil.generateToken(user.getEmail());
+    
+        } catch (RuntimeException e) {
+            return "Erro ao fazer login: " + e.getMessage();
+        } catch (Exception e) {
+            return "Erro inesperado ao fazer login: " + e.getMessage();
         }
-
-        return jwtUtil.generateToken(user.getEmail()); // Removido `return null;` desnecessário
     }
+    
 
     public String save(User user) {
         try {

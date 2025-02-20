@@ -32,18 +32,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+    try {
         return ResponseEntity.ok(userService.login(request));
-        
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ocorreu um erro"); 
     }
+}
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody ResgisterRequest request) {
-        return ResponseEntity.ok(userService.register(request));
-        
+@PostMapping("/register")
+public ResponseEntity<String> register(@RequestBody ResgisterRequest request) {
+    try {
+        return ResponseEntity.ok(userService.register(request)); 
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario ja existe!"); 
     }
-    
-    
+}
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody User user) {
