@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.Dto.AuthRequest;
+import com.example.demo.Dto.ResgisterRequest;
 import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 
@@ -25,6 +27,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+        return ResponseEntity.ok(userService.login(request));
+        
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody ResgisterRequest request) {
+        return ResponseEntity.ok(userService.register(request));
+        
+    }
+    
+    
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody User user) {
