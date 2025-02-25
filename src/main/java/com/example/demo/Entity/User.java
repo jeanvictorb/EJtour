@@ -26,6 +26,6 @@ public class User {
     
     private String birthday;
 
-    private String senha;
+    private String password;
 
 }

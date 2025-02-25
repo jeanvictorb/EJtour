@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Testimony;
 import com.example.demo.Repository.TestimonyRepository;
 
+@Service
 public class TestimonyService {
 
 
@@ -21,7 +23,7 @@ public class TestimonyService {
                 throw new IllegalArgumentException("O nome do usuario é obrigatório.");
             }
             TestimonyRepository.save(testimony);
-            return "Usuario salvo com sucesso!";
+            return "Depoimento salvo com sucesso!";
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         } catch (Exception e) {
