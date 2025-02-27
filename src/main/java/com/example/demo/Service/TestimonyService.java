@@ -22,13 +22,18 @@ public class TestimonyService {
     @Autowired
     private TestimonyRepository testimonyRepository;
 
+    public TestimonyService(UserRepository userRepository, TestimonyRepository testimonyRepository) {
+        this.userRepository = userRepository;
+        this.testimonyRepository = testimonyRepository;
+    }
     public Testimony save(Testimony testimony) {
         User user = userRepository.findByName(testimony.getName())
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         
-        testimony.setId(user.getId()); 
+        testimony.setUser(user); 
         return testimonyRepository.save(testimony);
     }
+    
     public String delete(long id) {
         try {
             testimonyRepository.deleteById(id);

@@ -34,7 +34,7 @@ public class TestimonyController {
             Testimony mensagem = testimonyService.save(testimony);
             return new ResponseEntity<>(mensagem.getTestimony().toString(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao salvar o User.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao salvar o depoimento.", HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -44,7 +44,7 @@ public class TestimonyController {
             String mensagem = testimonyService.update(id, testimony);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao atualizar o User.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao atualizar o depoimento.", HttpStatus.BAD_REQUEST);
         }
     }
     @DeleteMapping("/delete/{id}")
@@ -53,7 +53,7 @@ public class TestimonyController {
             String mensagem = testimonyService.delete(id);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao deletar o User.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao deletar o depoimento.", HttpStatus.BAD_REQUEST);
         }
     }
     @GetMapping("/findall")
