@@ -31,8 +31,8 @@ public class TestimonyController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Testimony testimony) {
         try {
-            String mensagem = testimonyService.save(testimony);
-            return new ResponseEntity<>(mensagem, HttpStatus.OK);
+            Testimony mensagem = testimonyService.save(testimony);
+            return new ResponseEntity<>(mensagem.getTestimony().toString(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Erro ao salvar o User.", HttpStatus.BAD_REQUEST);
         }

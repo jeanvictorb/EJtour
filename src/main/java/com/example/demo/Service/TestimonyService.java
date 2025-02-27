@@ -8,31 +8,30 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Testimony;
+import com.example.demo.Entity.User;
 import com.example.demo.Repository.TestimonyRepository;
+import com.example.demo.Repository.UserRepository;
 
 @Service
 public class TestimonyService {
 
 
     @Autowired
-    private TestimonyRepository TestimonyRepository;
+    private UserRepository userRepository;
 
-    public String save(Testimony testimony) {
-        try {
-            if (testimony.getName() == null || testimony.getName().trim().isEmpty()) {
-                throw new IllegalArgumentException("O nome do usuario é obrigatório.");
-            }
-            TestimonyRepository.save(testimony);
-            return "Depoimento salvo com sucesso!";
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        } catch (Exception e) {
-            return "Erro ao salvar o Usuario: " + e.getMessage();
-        }
+    @Autowired
+    private TestimonyRepository testimonyRepository;
+
+    public Testimony save(Testimony testimony) {
+        User user = userRepository.findByName(testimony.getName())
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        testimony.setId(user.getId()); 
+        return testimonyRepository.save(testimony);
     }
     public String delete(long id) {
         try {
-            TestimonyRepository.deleteById(id);
+            testimonyRepository.deleteById(id);
             return "usuario deletado com sucesso!";
         } catch (EmptyResultDataAccessException e) {
             return "Usuario não encontrado.";
@@ -41,18 +40,18 @@ public class TestimonyService {
         }
     }
     public Optional<Testimony> findById(long id) {
-        return TestimonyRepository.findById(id);
+        return testimonyRepository.findById(id);
     }
     public String update(long id, Testimony testimony) {
         try {
             if (testimony.getName() == null || testimony.getName().trim().isEmpty()) {
                 throw new IllegalArgumentException("O nome do Testimony é obrigatório.");
             }
-            if (!TestimonyRepository.existsById(id)) {
+            if (!testimonyRepository.existsById(id)) {
                 throw new IllegalArgumentException("Testimony não encontrado.");
             }
             testimony.setId(id);
-            TestimonyRepository.save(testimony);
+            testimonyRepository.save(testimony);
             return "Atualização realizada com sucesso!";
         } catch (IllegalArgumentException e) {
             return e.getMessage();
@@ -61,7 +60,7 @@ public class TestimonyService {
         }
     }
     public List<Testimony> findAll() {
-        return TestimonyRepository.findAll();
+        return testimonyRepository.findAll();
     }
 }
 

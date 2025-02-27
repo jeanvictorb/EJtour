@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
@@ -27,7 +29,7 @@ public class UserController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody User user) {
+    public ResponseEntity<String> save(@Valid @RequestBody User user) {
         try {
             String mensagem = userService.save(user);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
