@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -38,6 +39,8 @@ public class User {
     @NotBlank(message = "A senha é obrigatória.")
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     private String password;
+
+    private LocalDateTime lastLogin;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("user")
