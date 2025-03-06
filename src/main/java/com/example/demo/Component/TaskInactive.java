@@ -1,4 +1,4 @@
-package com.example.demo.Component;
+/*package com.example.demo.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,3 +28,4 @@ public class TaskInactive {
 }
 
 }
+*/
