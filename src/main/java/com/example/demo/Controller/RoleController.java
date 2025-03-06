@@ -1,5 +1,3 @@
-
-
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.Role;
@@ -20,9 +18,8 @@ public class RoleController {
         this.roleRepository = roleRepository;
     }
 
-    // ✅ Criar um novo papel
     @PostMapping
-    public ResponseEntity<String> createRole(@RequestBody RoleRequest request) {
+    public ResponseEntity<String> save(@RequestBody RoleRequest request) {
         Role role = new Role();
         role.setName(request.getName());
 
@@ -30,17 +27,15 @@ public class RoleController {
         return ResponseEntity.ok("Papel criado com sucesso!");
     }
 
-    // ✅ Listar todos os papéis
     @GetMapping
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
-    // 🔹 Classe interna para receber JSON no Request
     public static class RoleRequest {
-        private RoleName name;
+        private Role name;
 
-        public RoleName getName() { return name; }
-        public void setName(RoleName name) { this.name = name; }
+        public Role getName() { return name; }
+        public void setName(Role name) { this.name = name; }
     }
 }
