@@ -51,4 +51,13 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_tours",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "tour_id")
+    )
+    @JsonIgnoreProperties("users")
+    private Set<Tour> tours = new HashSet<>();
 }

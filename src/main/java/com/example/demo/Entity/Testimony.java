@@ -23,10 +23,10 @@ public class Testimony {
     @NotBlank(message = "O campo nome é obrigatório.")
     private String name;
     
-    @NotBlank(message = "O campo depoimentoo é obrigatório.")
+    @NotBlank(message = "O campo depoimento é obrigatório.")
     private String testimony;
     
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("testimonies")
     private User user; 

@@ -17,35 +17,38 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
+    @SuppressWarnings("null")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Tour> findById(@PathVariable Long id) {
         try {
             Tour tour = tourService.findById(id);
-            return new ResponseEntity<>(tour, HttpStatus.OK); // Status 200
+            return new ResponseEntity<>(tour, HttpStatus.OK); 
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Status 404 - Não encontrado
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); 
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Status 500 - Erro interno
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 
+    @SuppressWarnings("null")
     @GetMapping
     public ResponseEntity<List<Tour>> findAll() {
         try {
             List<Tour> tours = tourService.findAll();
-            return new ResponseEntity<>(tours, HttpStatus.OK); // Status 200
+            return new ResponseEntity<>(tours, HttpStatus.OK); 
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Status 500 - Erro interno
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<Tour> save(@RequestBody Tour tour) {
         try {
             Tour savedTour = tourService.save(tour);
-            return new ResponseEntity<>(savedTour, HttpStatus.CREATED); // Status 201 - Criado
+            return new ResponseEntity<>(savedTour, HttpStatus.CREATED); 
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // Status 400 - Bad Request
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); 
         }
     }
 
@@ -53,23 +56,25 @@ public class TourController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tourService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Status 204 - Sem conteúdo
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Status 404 - Não encontrado
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Status 500 - Erro interno
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 
+    @SuppressWarnings("null")
     @PutMapping
     public ResponseEntity<Tour> edit(@RequestBody Tour tour) {
         try {
             Tour updatedTour = tourService.update(tour);
-            return new ResponseEntity<>(updatedTour, HttpStatus.OK); // Status 200 - Ok
+            return new ResponseEntity<>(updatedTour, HttpStatus.OK); 
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Status 404 - Não encontrado
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); 
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Status 500 - Erro interno
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 }
+ 
